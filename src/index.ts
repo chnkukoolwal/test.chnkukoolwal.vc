@@ -16,11 +16,15 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname === "/health") {
+      console.log("sandbox.health", {
+        path: url.pathname,
+        method: request.method,
+      });
       return Response.json({
         ok: true,
         sandbox: "test.chnkukoolwal.vc",
         worker: "test0chnkukoolwal0vc",
-        model: "custom-domain + static-assets + kv",
+        model: "custom-domain + static-assets + kv + logs",
         path: url.pathname,
       });
     }

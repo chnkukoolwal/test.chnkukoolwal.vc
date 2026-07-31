@@ -25,7 +25,8 @@ Details:
 - Static files live in `public/` and are served via `env.ASSETS`
 - `/health` and `/kv-demo` are handled by Worker logic (`run_worker_first`)
 - Sandbox KV namespace: `test-chnkukoolwal-flags` bound as `env.FLAGS`
-- Config: `"custom_domain": true` + Assets + sandbox KV only
+- Workers Logs enabled via `observability.enabled = true`
+- Config: `"custom_domain": true` + Assets + sandbox KV + logs
 
 Do **not** re-add a `test.chnkukoolwal.vc/*` Workers route unless intentionally migrating away from Custom Domain.
 

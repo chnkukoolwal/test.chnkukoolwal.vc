@@ -26,5 +26,14 @@
       "binding": "FLAGS",
       "id": "f3c9868bfc224fa68604ae98576dddd2"
     }
-  ]
+  ],
+  // Workers Logs — sandbox only. Lets Cursor/Cloudflare query request logs.
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "logs": {
+      "invocation_logs": true,
+      "head_sampling_rate": 1
+    }
+  }
 }
