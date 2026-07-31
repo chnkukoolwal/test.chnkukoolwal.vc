@@ -6,10 +6,20 @@ This is the **only** surface Cursor should mutate during the Cursor Pro mastercl
 
 | Platform | Resource | Notes |
 |----------|----------|-------|
-| Domain | `https://test.chnkukoolwal.vc` | Experimental subdomain only |
+| Domain | `https://test.chnkukoolwal.vc` | Pure **Worker Custom Domain** (Worker-origin) |
 | Cloudflare Worker | `test0chnkukoolwal0vc` | Never rename to production routers |
 | GitHub | `chnkukoolwal/test.chnkukoolwal.vc` | This repo |
 | Notion teamspace | `test.chnkukoolwal.vc` | Hub page + Masterclass Lab |
+
+## Routing model
+
+This sandbox uses **Custom Domain**, not a Workers route:
+
+- Cloudflare manages DNS + certs for `test.chnkukoolwal.vc`
+- The Worker is the origin for the whole hostname
+- Config lives in `wrangler.jsonc` as `"custom_domain": true`
+
+Do **not** re-add a `test.chnkukoolwal.vc/*` Workers route unless intentionally migrating away from Custom Domain.
 
 ## Hard boundaries (do not touch)
 
@@ -24,14 +34,14 @@ This is the **only** surface Cursor should mutate during the Cursor Pro mastercl
 ```bash
 npm install
 npm run dev      # local Worker
-npm run deploy   # deploys ONLY test0chnkukoolwal0vc + test.chnkukoolwal.vc
+npm run deploy   # deploys ONLY test0chnkukoolwal0vc + custom domain test.chnkukoolwal.vc
 ```
 
 ## Cursor prompt scope (paste when needed)
 
 ```text
 SANDBOX ONLY: test.chnkukoolwal.vc
-- Cloudflare Worker: test0chnkukoolwal0vc
+- Cloudflare Worker: test0chnkukoolwal0vc (Custom Domain / Worker-origin)
 - GitHub repo: chnkukoolwal/test.chnkukoolwal.vc
 - Notion teamspace: test.chnkukoolwal.vc
 Do not read-for-edit or modify any other domain, Worker, repo, or teamspace.
