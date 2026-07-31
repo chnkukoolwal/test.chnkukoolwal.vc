@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // SANDBOX ONLY — never point this config at production Workers/domains
+  "name": "test0chnkukoolwal0vc",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-31",
+  "workers_dev": true,
+  "preview_urls": true,
+  // Use a zone route (matches your existing chnkukoolwal.vc pattern).
+  // Custom Domain attach conflicts with the existing test DNS record (409).
+  "routes": [
+    {
+      "pattern": "test.chnkukoolwal.vc/*",
+      "zone_name": "chnkukoolwal.vc"
+    }
+  ]
+}
