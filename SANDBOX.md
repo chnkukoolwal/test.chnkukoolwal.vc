@@ -11,13 +11,20 @@ This is the **only** surface Cursor should mutate during the Cursor Pro mastercl
 | GitHub | `chnkukoolwal/test.chnkukoolwal.vc` | This repo |
 | Notion teamspace | `test.chnkukoolwal.vc` | Hub page + Masterclass Lab |
 
-## Routing model
+## Routing + serving model
 
-This sandbox uses **Custom Domain**, not a Workers route:
+This sandbox uses:
+
+1. **Custom Domain** (not a Workers route) for hostname binding
+2. **Workers Static Assets** for the website files
+
+Details:
 
 - Cloudflare manages DNS + certs for `test.chnkukoolwal.vc`
 - The Worker is the origin for the whole hostname
-- Config lives in `wrangler.jsonc` as `"custom_domain": true`
+- Static files live in `public/` and are served via `env.ASSETS`
+- `/health` is handled by Worker logic (`run_worker_first`)
+- Config: `"custom_domain": true` + `assets.directory = "./public"`
 
 Do **not** re-add a `test.chnkukoolwal.vc/*` Workers route unless intentionally migrating away from Custom Domain.
 

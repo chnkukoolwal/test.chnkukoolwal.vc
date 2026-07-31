@@ -16,4 +16,12 @@ npm run dev
 npm run deploy
 ```
 
+## Layout
+
+```text
+public/          static site (HTML/CSS)
+src/index.ts     Worker logic (/health + ASSETS passthrough)
+wrangler.jsonc   Worker name, Custom Domain, Assets config
+```
+
 Production domains and Workers are intentionally out of scope for this repository.
