@@ -23,8 +23,9 @@ Details:
 - Cloudflare manages DNS + certs for `test.chnkukoolwal.vc`
 - The Worker is the origin for the whole hostname
 - Static files live in `public/` and are served via `env.ASSETS`
-- `/health` is handled by Worker logic (`run_worker_first`)
-- Config: `"custom_domain": true` + `assets.directory = "./public"`
+- `/health` and `/kv-demo` are handled by Worker logic (`run_worker_first`)
+- Sandbox KV namespace: `test-chnkukoolwal-flags` bound as `env.FLAGS`
+- Config: `"custom_domain": true` + Assets + sandbox KV only
 
 Do **not** re-add a `test.chnkukoolwal.vc/*` Workers route unless intentionally migrating away from Custom Domain.
 

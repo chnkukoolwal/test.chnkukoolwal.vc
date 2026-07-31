@@ -13,11 +13,18 @@
       "custom_domain": true
     }
   ],
-  // Static site files. Worker runs first for /health, then falls through to assets.
+  // Static site files. Worker runs first for dynamic paths, then falls through to assets.
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
     "not_found_handling": "404-page",
-    "run_worker_first": ["/health"]
-  }
+    "run_worker_first": ["/health", "/kv-demo"]
+  },
+  // Sandbox-only KV. Do not bind production token namespaces here.
+  "kv_namespaces": [
+    {
+      "binding": "FLAGS",
+      "id": "f3c9868bfc224fa68604ae98576dddd2"
+    }
+  ]
 }
