@@ -44,6 +44,13 @@ Do **not** re-add a `test.chnkukoolwal.vc/*` Workers route unless intentionally 
 npm install
 npm run dev      # local Worker
 npm run deploy   # deploys ONLY test0chnkukoolwal0vc + custom domain test.chnkukoolwal.vc
+
+# Deploy / rollback awareness (sandbox only)
+npx wrangler deployments list
+npx wrangler versions list
+npx wrangler deployments status
+# Rollback ONLY if intentionally undoing a sandbox deploy:
+# npx wrangler rollback <version-id> -m "reason"
 ```
 
 ## Cursor prompt scope (paste when needed)
