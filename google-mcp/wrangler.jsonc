@@ -1,0 +1,45 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // SANDBOX ONLY — Google MCP Worker (separate from test0chnkukoolwal0vc KV MCP)
+  "name": "test0chnkukoolwal0vc-google-mcp",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-31",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "migrations": [
+    {
+      "new_sqlite_classes": ["MyMCP"],
+      "tag": "v1"
+    },
+    {
+      "tag": "v2",
+      "renamed_classes": [
+        {
+          "from": "MyMCP",
+          "to": "SandboxGoogleMcp"
+        }
+      ]
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "SandboxGoogleMcp",
+        "name": "MCP_OBJECT"
+      }
+    ]
+  },
+  "kv_namespaces": [
+    {
+      "binding": "OAUTH_KV",
+      "id": "f11b61c988f9438882e58e565cff6f1b"
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "dev": {
+    "port": 8788
+  }
+}

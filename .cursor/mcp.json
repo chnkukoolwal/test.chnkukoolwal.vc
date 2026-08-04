@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "mc-sandbox-mcp": {
+      "url": "https://test.chnkukoolwal.vc/mcp"
+    },
+    "mc-sandbox-google-mcp": {
+      "url": "https://test0chnkukoolwal0vc-google-mcp.chinkukoolwal.workers.dev/mcp"
+    }
+  }
+}

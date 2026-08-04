@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": ".cursor/hooks/session-start.sh",
+        "timeout": 10
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": ".cursor/hooks/shell-gate.sh",
+        "timeout": 10
+      },
+      {
+        "type": "prompt",
+        "matcher": "curl|wget",
+        "timeout": 20,
+        "prompt": "You are a sandbox network policy reviewer for the Cursor Pro masterclass repo test.chnkukoolwal.vc.\n\nAllow (ok=true) only if the command clearly targets: localhost, 127.0.0.1, test.chnkukoolwal.vc, *.workers.dev for the sandbox google MCP worker test0chnkukoolwal0vc-google-mcp, or common package/registry hosts (npm, github.com raw/api as read).\n\nDeny (ok=false) if the command clearly targets production hosts: chnkukoolwal.vc, www.chnkukoolwal.vc, avvyun.vc, or other non-sandbox production APIs.\n\nIf uncertain, prefer ok=false with a short reason asking for human review.\n\nHook input: $ARGUMENTS"
+      }
+    ],
+    "afterShellExecution": [
+      {
+        "command": ".cursor/hooks/audit-shell.sh",
+        "timeout": 10
+      }
+    ],
+    "beforeReadFile": [
+      {
+        "command": ".cursor/hooks/read-gate.sh",
+        "timeout": 10
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": ".cursor/hooks/audit-edit.sh",
+        "timeout": 10
+      }
+    ],
+    "beforeMCPExecution": [
+      {
+        "command": ".cursor/hooks/mcp-gate.sh",
+        "timeout": 10,
+        "failClosed": true
+      }
+    ],
+    "afterMCPExecution": [
+      {
+        "command": ".cursor/hooks/audit-mcp.sh",
+        "timeout": 10
+      }
+    ]
+  }
+}

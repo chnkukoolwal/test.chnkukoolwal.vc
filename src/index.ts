@@ -2,18 +2,44 @@
  * Sandbox Worker for test.chnkukoolwal.vc only.
  * Static files live in /public and are served via env.ASSETS.
  * /health and /kv-demo prove Worker logic + KV bindings.
+ * /mcp is the Lesson 5.6 custom remote MCP (stateless Streamable HTTP).
  */
 
-export interface Env {
-  ASSETS: Fetcher;
-  FLAGS: KVNamespace;
-}
+import { createMcpHandler } from "agents/mcp/server";
+import type { Env } from "./env";
+import { createSandboxMcpServer } from "./mcp";
+
+export type { Env };
 
 const FLAG_KEY = "sandbox.message";
 
+const MCP_HANDLER_OPTIONS = {
+  route: "/mcp",
+  // Custom domain Host allowlist (required for non-workers.dev hosts)
+  allowedHostnames: [
+    "test.chnkukoolwal.vc",
+    "test0chnkukoolwal0vc.workers.dev",
+  ],
+  // Non-browser MCP clients often omit Origin. Tools themselves are sandbox-only.
+  allowedOriginHostnames: "*" as const,
+};
+
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext,
+  ): Promise<Response> {
     const url = new URL(request.url);
+
+    if (url.pathname === "/mcp" || url.pathname.startsWith("/mcp/")) {
+      // Fresh factory per request so tools close over this request's env (KV).
+      const handler = createMcpHandler(
+        () => createSandboxMcpServer(env),
+        MCP_HANDLER_OPTIONS,
+      );
+      return handler(request, env, ctx);
+    }
 
     if (url.pathname === "/health") {
       console.log("sandbox.health", {
@@ -24,8 +50,9 @@ export default {
         ok: true,
         sandbox: "test.chnkukoolwal.vc",
         worker: "test0chnkukoolwal0vc",
-        model: "custom-domain + static-assets + kv + logs",
+        model: "custom-domain + static-assets + kv + logs + mcp",
         path: url.pathname,
+        mcp: "/mcp",
       });
     }
 
